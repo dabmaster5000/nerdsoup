@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Webhook Receiver</title>
+</head>
+<body>
+    <h1>GitHub Webhook Receiver</h1>
+    <p>This page is ready to receive GitHub webhooks.</p>
+    
+    <script>
+        // JavaScript function to handle incoming webhook payloads
+        function handleWebhook(event) {
+            var payload = JSON.parse(event.data);
+            
+            // Check for the specific event or actions you want to respond to
+            if (payload.action === "opened") {
+                // Perform some action here
+                console.log("Issue opened:", payload.issue);
+            }
+            // Add more conditionals for other events as needed
+            
+            // You can also send a response back if required
+            // Example: sendResponseToGitHub(payload);
+        }
+        
+        // Add an event listener to listen for incoming webhooks
+        if (window.EventSource) {
+            var source = new EventSource("/webhook");
+            source.addEventListener("message", handleWebhook);
+        } else {
+            console.error("EventSource not supported in this browser.");
+        }
+    </script>
+</body>
+</html>
